@@ -78,14 +78,14 @@ A comprehensive, HIPAA-compliant mental health platform designed to connect pati
 - **Email Service**: Resend API
 
 #### Infrastructure
-- **Cloud Provider**: Google Cloud Platform
-- **Hosting**: Cloud Run (Serverless containers)
-- **Database**: Cloud SQL PostgreSQL
-- **Caching**: Memorystore Redis
+- **Frontend Hosting**: Vercel (CDN + Edge Functions)
+- **Backend Hosting**: Google Cloud VM (Ubuntu + Node.js)
+- **Database**: Google Cloud SQL PostgreSQL
+- **Caching**: Google Cloud Memorystore Redis
 - **Storage**: Google Cloud Storage
-- **Monitoring**: Google Cloud Monitoring & Logging
-- **CI/CD**: Google Cloud Build
-- **IaC**: Terraform
+- **Monitoring**: Google Cloud Monitoring & Logging + Vercel Analytics
+- **CI/CD**: GitHub Actions + Vercel Integration
+- **IaC**: Terraform for Google Cloud resources
 
 #### Security & Compliance
 - **Encryption**: TLS 1.3, AES-256 for data at rest
@@ -165,34 +165,36 @@ npm run dev
 
 ### Production Deployment
 
-#### Using Automated Deployment Script
-```bash
-# Make script executable
-chmod +x scripts/deploy.sh
+#### Hybrid Architecture: Vercel + Google Cloud
 
-# Run deployment
-./scripts/deploy.sh \
-  --project-id your-gcp-project-id \
-  --domain neurona.health \
-  --db-password secure_password \
-  --jwt-secret your_jwt_secret \
-  --resend-api-key your_resend_key
+**Frontend (Vercel)**:
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy to Vercel
+vercel --prod
+
+# Configure domains:
+# - neurona.health (main)
+# - www.neurona.health (redirect)
 ```
 
-#### Manual Terraform Deployment
+**Backend (Google Cloud VM)**:
 ```bash
 # Navigate to terraform directory
 cd terraform
 
-# Initialize Terraform
+# Deploy infrastructure
 terraform init
+terraform apply -var-file="terraform.tfvars"
 
-# Plan deployment
-terraform plan -var="project_id=your-project-id"
-
-# Apply deployment
-terraform apply
+# Deploy backend code to VM
+ssh into VM and run:
+sudo /opt/neurona/deploy.sh
 ```
+
+**See detailed guide**: [DEPLOYMENT_HYBRID.md](DEPLOYMENT_HYBRID.md)
 
 ## 📝 API Documentation
 
