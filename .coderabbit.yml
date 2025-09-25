@@ -1,0 +1,243 @@
+# CodeRabbit Configuration for Neurona Mental Health Platform
+# This file configures automated code reviews for enhanced code quality and security
+
+# Language-specific configurations
+language: "typescript"
+
+# Review settings
+reviews:
+  # Review criteria
+  profile: "chill"  # Options: assertive, chill
+  
+  # Auto-review settings
+  auto_review: true
+  
+  # Request changes for critical issues
+  request_changes_workflow: true
+  
+  # Add comments for suggestions
+  add_line_number_to_suggestions: true
+
+# Path-based review settings
+path_instructions:
+  - path: "**/*.tsx"
+    instructions: |
+      - Focus on React component best practices
+      - Ensure proper TypeScript typing
+      - Check for accessibility compliance
+      - Verify HIPAA-compliant data handling
+      - Review error handling and user feedback
+      
+  - path: "**/*.ts"
+    instructions: |
+      - Enforce strict TypeScript rules
+      - Check for proper error handling
+      - Verify input validation
+      - Review security implications
+      - Ensure proper logging practices
+      
+  - path: "**/backend/**"
+    instructions: |
+      - Focus on API security and authentication
+      - Check for SQL injection prevention
+      - Verify input validation and sanitization
+      - Review HIPAA compliance measures
+      - Ensure proper error handling and logging
+      - Check rate limiting implementation
+      
+  - path: "**/components/**"
+    instructions: |
+      - Review component reusability
+      - Check for proper prop typing
+      - Verify accessibility standards
+      - Ensure responsive design compliance
+      - Review state management patterns
+      
+  - path: "**/utils/**"
+    instructions: |
+      - Focus on function purity and testability
+      - Check for proper error handling
+      - Verify edge case handling
+      - Review performance implications
+      
+  - path: "**/tests/**"
+    instructions: |
+      - Ensure comprehensive test coverage
+      - Review test quality and maintainability
+      - Check for proper mocking
+      - Verify integration test completeness
+      
+  - path: "**/*.sql"
+    instructions: |
+      - Review SQL security (injection prevention)
+      - Check query performance
+      - Verify data integrity constraints
+      - Review migration safety
+      
+  - path: "**/terraform/**"
+    instructions: |
+      - Review infrastructure security
+      - Check resource optimization
+      - Verify compliance with cloud best practices
+      - Review cost implications
+      
+  - path: "**/docker/**"
+    instructions: |
+      - Review Docker security best practices
+      - Check for optimized layer caching
+      - Verify minimal image size
+      - Review multi-stage build efficiency
+
+# Custom rules for healthcare application
+rules:
+  # Security rules
+  security:
+    - name: "HIPAA Compliance"
+      description: "Ensure HIPAA-compliant data handling"
+      severity: "error"
+      pattern: |
+        Check for:
+        - Proper encryption of PHI (Protected Health Information)
+        - Audit logging for data access
+        - Secure data transmission
+        - Access control implementation
+        
+    - name: "Input Validation"
+      description: "Verify proper input validation"
+      severity: "error"
+      pattern: |
+        Check for:
+        - SQL injection prevention
+        - XSS protection
+        - Data sanitization
+        - Schema validation
+        
+    - name: "Authentication Security"
+      description: "Review authentication implementation"
+      severity: "error"
+      pattern: |
+        Check for:
+        - JWT token security
+        - Session management
+        - Password hashing
+        - Rate limiting
+        
+  # Code quality rules
+  quality:
+    - name: "Error Handling"
+      description: "Ensure comprehensive error handling"
+      severity: "warning"
+      pattern: |
+        Check for:
+        - Try-catch blocks for async operations
+        - Proper error logging
+        - User-friendly error messages
+        - Error boundary implementation
+        
+    - name: "Performance"
+      description: "Review performance implications"
+      severity: "info"
+      pattern: |
+        Check for:
+        - Database query optimization
+        - Efficient React renders
+        - Memory leak prevention
+        - Bundle size optimization
+        
+    - name: "Accessibility"
+      description: "Ensure accessibility compliance"
+      severity: "warning"
+      pattern: |
+        Check for:
+        - ARIA attributes
+        - Keyboard navigation
+        - Screen reader compatibility
+        - Color contrast compliance
+
+# File exclusions
+ignore:
+  - "node_modules/**"
+  - "dist/**"
+  - "build/**"
+  - ".next/**"
+  - "coverage/**"
+  - "*.min.js"
+  - "*.map"
+  - "public/assets/**"
+  - "logs/**"
+  - ".env*"
+  - "*.lock"
+
+# Review focus areas
+focus_areas:
+  - "security"
+  - "performance"
+  - "maintainability"
+  - "accessibility"
+  - "error_handling"
+  - "testing"
+  - "documentation"
+
+# Healthcare-specific checks
+healthcare_compliance:
+  hipaa:
+    enabled: true
+    check_patterns:
+      - "patient data handling"
+      - "PHI encryption"
+      - "audit logging"
+      - "access controls"
+      - "data retention policies"
+      
+  security:
+    enabled: true
+    check_patterns:
+      - "authentication flows"
+      - "authorization checks"
+      - "input validation"
+      - "output encoding"
+      - "secure communications"
+
+# AI review settings
+ai_review:
+  # Enable AI-powered suggestions
+  enabled: true
+  
+  # Focus on healthcare domain knowledge
+  domain_knowledge: "healthcare"
+  
+  # Custom prompts for healthcare review
+  custom_prompts:
+    - "Review for HIPAA compliance and patient data protection"
+    - "Check for healthcare industry best practices"
+    - "Verify mental health platform security requirements"
+    - "Ensure crisis detection and escalation protocols are secure"
+    - "Review telehealth video consultation security measures"
+
+# Integration settings
+integrations:
+  github:
+    # Post review comments on PRs
+    pr_comments: true
+    
+    # Auto-approve low-risk changes
+    auto_approve: false
+    
+    # Request changes for critical issues
+    request_changes: true
+    
+  slack:
+    # Slack integration (if configured)
+    enabled: false
+    webhook_url: ""
+    
+# Learning and improvement
+learning:
+  # Learn from developer feedback
+  feedback_learning: true
+  
+  # Adapt to codebase patterns
+  pattern_learning: true
+  
+  # Improve over time
+  continuous_improvement: true
